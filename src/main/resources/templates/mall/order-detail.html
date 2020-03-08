@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="mall/header::head-fragment('NewBee商城-订单详情','order-detail')">
+<head th:replace="mall/header::head-fragment('badminton商城-订单详情','order-detail')">
 </head>
 <link rel="stylesheet" th:href="@{/admin/plugins/sweetalert/sweetalert.css}"/>
 <body>
@@ -55,10 +55,10 @@
                                     </div>
                                     <div class="order-desc">
                                         <th:block th:if="${orderDetailVO.orderStatus==0}">请尽快完成支付哦~</th:block>
-                                        <th:block th:if="${orderDetailVO.orderStatus==1}">newbee商城订单确认中~</th:block>
-                                        <th:block th:if="${orderDetailVO.orderStatus==2}">newbee仓库正在紧急配货中~</th:block>
+                                        <th:block th:if="${orderDetailVO.orderStatus==1}">badminton商城订单确认中~</th:block>
+                                        <th:block th:if="${orderDetailVO.orderStatus==2}">badminton仓库正在紧急配货中~</th:block>
                                         <th:block th:if="${orderDetailVO.orderStatus==3}">订单已出库正在快马加鞭向您奔来~</th:block>
-                                        <th:block th:if="${orderDetailVO.orderStatus==4}">交易成功，感谢您对newbee商城的支持~
+                                        <th:block th:if="${orderDetailVO.orderStatus==4}">交易成功，感谢您对badminton商城的支持~
                                         </th:block>
                                         <th:block th:if="${orderDetailVO.orderStatus<0}">交易已关闭~</th:block>
 
@@ -132,7 +132,7 @@
                                 </div>
                                 <table class="order-items-table">
                                     <tbody>
-                                    <th:block th:each="item : ${orderDetailVO.newBeeMallOrderItemVOS}">
+                                    <th:block th:each="item : ${orderDetailVO.orderItemVOS}">
                                         <tr>
                                             <td class="col col-thumb">
                                                 <div class="figure figure-thumb">
@@ -210,7 +210,7 @@
     </div>
 </div>
 
-<div th:replace="mall/footer::footer-fragment"></div>
+<!--<div th:replace="mall/footer::footer-fragment"></div>-->
 <!-- jQuery -->
 <script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
 <script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>

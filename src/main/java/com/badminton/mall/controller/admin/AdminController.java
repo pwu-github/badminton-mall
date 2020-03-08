@@ -1,5 +1,6 @@
 package com.badminton.mall.controller.admin;
 
+import com.badminton.mall.common.Constants;
 import com.badminton.mall.common.ServiceResultEnum;
 import com.badminton.mall.entity.AdminUser;
 import com.badminton.mall.service.AdminUserService;
@@ -54,7 +55,8 @@ public class AdminController {
             session.setAttribute("errorMsg", "用户名或密码不能为空");
             return "admin/login";
         }
-        String kaptchaCode = session.getAttribute("verifyCode") + "";
+//        String kaptchaCode = session.getAttribute("verifyCode") + "";
+        String kaptchaCode = session.getAttribute(Constants.MALL_VERIFY_CODE_KEY) + "";
         if (StringUtils.isEmpty(kaptchaCode) || !verifyCode.equals(kaptchaCode)) {
             session.setAttribute("errorMsg", "验证码错误");
             return "admin/login";
@@ -67,7 +69,7 @@ public class AdminController {
             //session.setMaxInactiveInterval(60 * 60 * 2);
             return "redirect:/admin/index";
         } else {
-            session.setAttribute("errorMsg", "对不起，登陆失败，您不是管理员用户！");
+            session.setAttribute("errorMsg", "登陆失败，您不是管理员用户！");
             return "admin/login";
         }
     }

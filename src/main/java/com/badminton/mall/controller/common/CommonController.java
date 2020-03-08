@@ -28,7 +28,7 @@ public class CommonController {
         try {
             //生产验证码字符串并保存到session中
             String verifyCode = captchaProducer.createText();
-            httpServletRequest.getSession().setAttribute("verifyCode", verifyCode);
+            httpServletRequest.getSession().setAttribute(Constants.MALL_VERIFY_CODE_KEY, verifyCode);
             BufferedImage challenge = captchaProducer.createImage(verifyCode);
             ImageIO.write(challenge, "jpg", imgOutputStream);
         } catch (IllegalArgumentException e) {
@@ -58,7 +58,7 @@ public class CommonController {
         properties.put("kaptcha.image.height", "40");
         properties.put("kaptcha.session.key", Constants.MALL_VERIFY_CODE_KEY);
         properties.put("kaptcha.textproducer.char.space", "2");
-        properties.put("kaptcha.textproducer.char.length", "6");
+        properties.put("kaptcha.textproducer.char.length", "4");
         Config config = new Config(properties);
         newBeeMallLoginKaptcha.setConfig(config);
         byte[] captchaOutputStream = null;

@@ -1,5 +1,6 @@
 package com.badminton.mall.controller.common;
 
+import com.badminton.mall.common.Constants;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
 import org.springframework.context.annotation.Bean;
@@ -18,8 +19,9 @@ public class KaptchaConfig {
         properties.put("kaptcha.image.width", "150");
         properties.put("kaptcha.image.height", "40");
         properties.put("kaptcha.textproducer.font.size", "30");
-        properties.put("kaptcha.session.key", "verifyCode");
-        properties.put("kaptcha.textproducer.char.space", "5");
+        properties.put("kaptcha.session.key", Constants.MALL_VERIFY_CODE_KEY);
+        properties.put("kaptcha.textproducer.char.space", "4");
+        properties.put("kaptcha.textproducer.char.length", "4");
         Config config = new Config(properties);
         defaultKaptcha.setConfig(config);
 

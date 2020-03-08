@@ -2,9 +2,9 @@ package com.badminton.mall.controller.mall;
 
 import com.badminton.mall.common.Constants;
 import com.badminton.mall.common.ServiceResultEnum;
-import com.badminton.mall.controller.vo.NewBeeMallUserVO;
-import com.badminton.mall.entity.MallUser;
-import com.badminton.mall.service.NewBeeMallUserService;
+import com.badminton.mall.controller.vo.UserVO;
+import com.badminton.mall.entity.ConsumerUser;
+import com.badminton.mall.service.ConsumerUserService;
 import com.badminton.mall.util.MD5Util;
 import com.badminton.mall.util.Result;
 import com.badminton.mall.util.ResultGenerator;
@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 public class PersonalController {
 
     @Resource
-    private NewBeeMallUserService newBeeMallUserService;
+    private ConsumerUserService userService;
 
     @GetMapping("/personal")
     public String personalPage(HttpServletRequest request,
@@ -70,7 +70,7 @@ public class PersonalController {
             return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_ERROR.getResult());
         }
         //todo 清verifyCode
-        String loginResult = newBeeMallUserService.login(loginName, MD5Util.MD5Encode(password, "UTF-8"), httpSession);
+        String loginResult = userService.login(loginName, MD5Util.MD5Encode(password, "UTF-8"), httpSession);
         //登录成功
         if (ServiceResultEnum.SUCCESS.getResult().equals(loginResult)) {
             return ResultGenerator.genSuccessResult();
@@ -99,7 +99,7 @@ public class PersonalController {
             return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_ERROR.getResult());
         }
         //todo 清verifyCode
-        String registerResult = newBeeMallUserService.register(loginName, password);
+        String registerResult = userService.register(loginName, password);
         //注册成功
         if (ServiceResultEnum.SUCCESS.getResult().equals(registerResult)) {
             return ResultGenerator.genSuccessResult();
@@ -110,8 +110,8 @@ public class PersonalController {
 
     @PostMapping("/personal/updateInfo")
     @ResponseBody
-    public Result updateInfo(@RequestBody MallUser mallUser, HttpSession httpSession) {
-        NewBeeMallUserVO mallUserTemp = newBeeMallUserService.updateUserInfo(mallUser,httpSession);
+    public Result updateInfo(@RequestBody ConsumerUser consumerUser, HttpSession httpSession) {
+        UserVO mallUserTemp = userService.updateUserInfo(consumerUser,httpSession);
         if (mallUserTemp == null) {
             Result result = ResultGenerator.genFailResult("修改失败");
             return result;

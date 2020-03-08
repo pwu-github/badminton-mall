@@ -21,9 +21,9 @@ body {
 }
 
 .form {
-    width: 1130px;
+    width: 350px;
     height: 588px;
-    background: url("../image/login_bg.png") no-repeat center center;
+    background: no-repeat center center;
 }
 
 .form .login {
@@ -39,7 +39,7 @@ body {
 
 .form .login .login_center {
     width: 360px;
-    margin: 10px auto;
+    margin: 100px auto;
     padding: 30px 0;
 }
 

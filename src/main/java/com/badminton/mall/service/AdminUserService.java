@@ -35,4 +35,5 @@ public interface AdminUserService {
      */
     Boolean updateName(Integer loginUserId, String loginUserName, String nickName);
 
+    String register(String loginName, String password);
 }
