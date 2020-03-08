@@ -3,6 +3,7 @@ package com.badminton.mall.config;
 
 import com.badminton.mall.common.Constants;
 import com.badminton.mall.interceptor.AdminLoginInterceptor;
+import com.badminton.mall.interceptor.BusinessLoginInterceptor;
 import com.badminton.mall.interceptor.CartNumberInterceptor;
 import com.badminton.mall.interceptor.LoginInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +21,24 @@ public class MallWebMvcConfigurer implements WebMvcConfigurer {
     private LoginInterceptor loginInterceptor;
     @Autowired
     private CartNumberInterceptor cartNumberInterceptor;
+    @Autowired
+    private BusinessLoginInterceptor businessLoginInterceptor;
 
     public void addInterceptors(InterceptorRegistry registry) {
         // 添加一个拦截器，拦截以/admin为前缀的url路径（后台登陆拦截）
         registry.addInterceptor(adminLoginInterceptor)
                 .addPathPatterns("/admin/**")
                 .excludePathPatterns("/admin/login")
+                .excludePathPatterns("/admin/register")
                 .excludePathPatterns("/admin/dist/**")
                 .excludePathPatterns("/admin/plugins/**");
+        // 添加一个拦截器，拦截以/business为前缀的url路径（后台登陆拦截）
+        registry.addInterceptor(businessLoginInterceptor)
+                .addPathPatterns("/business/**")
+                .excludePathPatterns("/business/login")
+                .excludePathPatterns("/business/register")
+                .excludePathPatterns("/business/dist/**")
+                .excludePathPatterns("/business/plugins/**");
         // 购物车中的数量统一处理
         registry.addInterceptor(cartNumberInterceptor)
                 .excludePathPatterns("/admin/**")
