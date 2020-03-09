@@ -5,7 +5,7 @@
  * Description:
  * History:
  **/
-package com.badminton.mall.controller.mall;
+package com.badminton.mall.controller.business;
 
 import com.badminton.mall.common.Constants;
 import com.badminton.mall.common.ServiceResultEnum;
@@ -46,6 +46,15 @@ public class BusinessController {
         request.setAttribute("businessPath", "index");
         return "business/index";
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        request.getSession().removeAttribute("loginUserId");
+        request.getSession().removeAttribute("loginUser");
+        request.getSession().removeAttribute("errorMsg");
+        return "business/login";
+    }
+
 
     @PostMapping("/login")
     public String login(@RequestParam("userName") String userName,
@@ -114,4 +123,52 @@ public class BusinessController {
         //注册失败
         return ResultGenerator.genFailResult(registerResult);
     }
+
+    @GetMapping("/profile")
+    public String profile(HttpServletRequest request) {
+        Integer loginUserId = (int) request.getSession().getAttribute("loginUserId");
+        BusinessUser businessUser = businessService.getUserDetailById(loginUserId);
+        if (businessUser == null) {
+            return "business/login";
+        }
+        request.setAttribute("businessPath", "profile");
+        request.setAttribute("loginUserName", businessUser.getLoginName());
+        request.setAttribute("nickName", businessUser.getNickName());
+        return "business/profile";
+    }
+
+    @PostMapping("/profile/password")
+    @ResponseBody
+    public String passwordUpdate(HttpServletRequest request, @RequestParam("originalPassword") String originalPassword,
+                                 @RequestParam("newPassword") String newPassword) {
+        if (StringUtils.isEmpty(originalPassword) || StringUtils.isEmpty(newPassword)) {
+            return "参数不能为空";
+        }
+        Integer loginUserId = (int) request.getSession().getAttribute("loginUserId");
+        if (businessService.updatePassword(loginUserId, originalPassword, newPassword)) {
+            //修改成功后清空session中的数据，前端控制跳转至登录页
+            request.getSession().removeAttribute("loginUserId");
+            request.getSession().removeAttribute("loginUser");
+            request.getSession().removeAttribute("errorMsg");
+            return ServiceResultEnum.SUCCESS.getResult();
+        } else {
+            return "修改失败";
+        }
+    }
+
+    @PostMapping("/profile/name")
+    @ResponseBody
+    public String nameUpdate(HttpServletRequest request, @RequestParam("loginUserName") String loginUserName,
+                             @RequestParam("nickName") String nickName) {
+        if (StringUtils.isEmpty(loginUserName) || StringUtils.isEmpty(nickName)) {
+            return "参数不能为空";
+        }
+        Integer loginUserId = (int) request.getSession().getAttribute("loginUserId");
+        if (businessService.updateName(loginUserId, loginUserName, nickName)) {
+            return ServiceResultEnum.SUCCESS.getResult();
+        } else {
+            return "修改失败";
+        }
+    }
+
 }

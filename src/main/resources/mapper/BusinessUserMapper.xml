@@ -63,4 +63,31 @@
     from business_user
     where login_name = #{loginName} and locked = 0
   </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from business_user
+    where business_user_id = #{loginUserId,jdbcType=INTEGER}
+  </select>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.badminton.mall.entity.BusinessUser">
+    update business_user
+    <set>
+      <if test="loginUserName != null">
+        login_name = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="locked != null">
+        locked = #{locked,jdbcType=TINYINT},
+      </if>
+    </set>
+    where business_user_id = #{businessUserId,jdbcType=INTEGER}
+  </update>
+
 </mapper>

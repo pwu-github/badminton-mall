@@ -9,4 +9,8 @@ public interface BusinessUserMapper {
     BusinessUser selectByLoginName(String loginName);
 
     int insertSelective(BusinessUser businessUser);
+
+    BusinessUser selectByPrimaryKey(Integer loginUserId);
+
+    int updateByPrimaryKeySelective(BusinessUser businessUser);
 }

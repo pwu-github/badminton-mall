@@ -9,6 +9,7 @@ package com.badminton.mall.service.impl;
 
 import com.badminton.mall.common.ServiceResultEnum;
 import com.badminton.mall.dao.BusinessUserMapper;
+import com.badminton.mall.entity.AdminUser;
 import com.badminton.mall.entity.BusinessUser;
 import com.badminton.mall.service.BusinessService;
 import com.badminton.mall.util.MD5Util;
@@ -39,5 +40,46 @@ public class BusinessUserServiceImpl implements BusinessService {
             return ServiceResultEnum.SUCCESS.getResult();
         }
         return ServiceResultEnum.DB_ERROR.getResult();
+    }
+
+    @Override
+    public BusinessUser getUserDetailById(Integer loginUserId) {
+        return businessUserMapper.selectByPrimaryKey(loginUserId);
+    }
+
+    @Override
+    public boolean updatePassword(Integer loginUserId, String originalPassword, String newPassword) {
+        BusinessUser businessUser = businessUserMapper.selectByPrimaryKey(loginUserId);
+        //当前用户非空才可以进行更改
+        if (businessUser != null) {
+            String originalPasswordMd5 = MD5Util.MD5Encode(originalPassword, "UTF-8");
+            String newPasswordMd5 = MD5Util.MD5Encode(newPassword, "UTF-8");
+            //比较原密码是否正确
+            if (originalPasswordMd5.equals(businessUser.getPassword())) {
+                //设置新密码并修改
+                businessUser.setPassword(newPasswordMd5);
+                if (businessUserMapper.updateByPrimaryKeySelective(businessUser) > 0) {
+                    //修改成功则返回true
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateName(Integer loginUserId, String loginUserName, String nickName) {
+        BusinessUser businessUser = businessUserMapper.selectByPrimaryKey(loginUserId);
+        //当前用户非空才可以进行更改
+        if (businessUser != null) {
+            //设置新名称并修改
+            businessUser.setLoginName(loginUserName);
+            businessUser.setNickName(nickName);
+            if (businessUserMapper.updateByPrimaryKeySelective(businessUser) > 0) {
+                //修改成功则返回true
+                return true;
+            }
+        }
+        return false;
     }
 }
