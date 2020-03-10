@@ -63,4 +63,6 @@ public interface GoodsService {
      * @return
      */
     PageResult searchNewBeeMallGoods(PageQueryUtil pageUtil);
+
+    void incView(Long goodsId);
 }

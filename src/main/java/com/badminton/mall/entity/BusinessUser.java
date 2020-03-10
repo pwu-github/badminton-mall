@@ -7,6 +7,10 @@
  **/
 package com.badminton.mall.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.util.Date;
+
 public class BusinessUser {
     private Integer businessUserId;
 
@@ -17,6 +21,27 @@ public class BusinessUser {
     private String nickName;
 
     private Byte locked;
+
+    private Byte isDeleted;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createTime;
+
+    public Byte getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Byte isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
     public Integer getBusinessUserId() {
         return businessUserId;
@@ -69,6 +94,8 @@ public class BusinessUser {
         sb.append(", password=").append(password);
         sb.append(", nickName=").append(nickName);
         sb.append(", locked=").append(locked);
+        sb.append(", isDeleted=").append(isDeleted);
+        sb.append(", create_time=").append(createTime);
         sb.append("]");
         return sb.toString();
     }

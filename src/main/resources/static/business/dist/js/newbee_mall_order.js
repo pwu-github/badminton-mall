@@ -1,6 +1,6 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: '/admin/orders/list',
+        url: '/business/orders/list',
         datatype: "json",
         colModel: [
             {label: 'id', name: 'orderId', index: 'orderId', width: 50, key: true, hidden: true},
@@ -115,7 +115,7 @@ function openOrderItems(orderId) {
     $('.modal-title').html('订单详情');
     $.ajax({
         type: 'GET',//方法类型
-        url: '/admin/order-items/' + orderId,
+        url: '/business/order-items/' + orderId,
         contentType: 'application/json',
         success: function (result) {
             if (result.resultCode == 200) {
@@ -176,7 +176,7 @@ $('#saveButton').click(function () {
     var userPhone = $("#userPhone").val();
     var userAddress = $("#userAddress").val();
     var id = getSelectedRowWithoutAlert();
-    var url = '/admin/orders/update';
+    var url = '/business/orders/update';
     var data = {
         "orderId": id,
         "totalPrice": totalPrice,
@@ -249,7 +249,7 @@ function orderCheckDone() {
             if (flag) {
                 $.ajax({
                     type: "POST",
-                    url: "/admin/orders/checkDone",
+                    url: "/business/orders/checkDone",
                     contentType: "application/json",
                     data: JSON.stringify(ids),
                     success: function (r) {
@@ -308,7 +308,7 @@ function orderCheckOut() {
             if (flag) {
                 $.ajax({
                     type: "POST",
-                    url: "/admin/orders/checkOut",
+                    url: "/business/orders/checkOut",
                     contentType: "application/json",
                     data: JSON.stringify(ids),
                     success: function (r) {
@@ -345,7 +345,7 @@ function closeOrder() {
             if (flag) {
                 $.ajax({
                     type: "POST",
-                    url: "/admin/orders/close",
+                    url: "/business/orders/close",
                     contentType: "application/json",
                     data: JSON.stringify(ids),
                     success: function (r) {

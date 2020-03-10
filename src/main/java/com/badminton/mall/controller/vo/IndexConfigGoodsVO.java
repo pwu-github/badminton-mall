@@ -19,6 +19,16 @@ public class IndexConfigGoodsVO implements Serializable {
 
     private String tag;
 
+    private Integer viewCount;
+
+    public Integer getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(Integer viewCount) {
+        this.viewCount = viewCount;
+    }
+
     public Long getGoodsId() {
         return goodsId;
     }

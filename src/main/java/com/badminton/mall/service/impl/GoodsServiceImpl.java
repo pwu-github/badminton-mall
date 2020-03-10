@@ -93,4 +93,12 @@ public class GoodsServiceImpl implements GoodsService {
         PageResult pageResult = new PageResult(searchGoodsVOS, total, pageUtil.getLimit(), pageUtil.getPage());
         return pageResult;
     }
+
+    @Override
+    public void incView(Long goodsId) {
+        GoodsInfo goodsInfo = new GoodsInfo();
+        goodsInfo.setViewCount(1);
+        goodsInfo.setGoodsId(goodsId);
+        goodsMapper.incView(goodsId);
+    }
 }

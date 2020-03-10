@@ -39,4 +39,5 @@ public interface GoodsMapper {
 
     int batchUpdateSellStatus(@Param("orderIds") Long[] orderIds, @Param("sellStatus") int sellStatus);
 
+    void incView(Long goodsId);
 }

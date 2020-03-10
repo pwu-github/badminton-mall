@@ -12,7 +12,7 @@ import com.badminton.mall.common.ServiceResultEnum;
 import com.badminton.mall.entity.AdminUser;
 import com.badminton.mall.entity.BusinessUser;
 import com.badminton.mall.service.AdminUserService;
-import com.badminton.mall.service.BusinessService;
+import com.badminton.mall.service.BusinessUserService;
 import com.badminton.mall.util.Result;
 import com.badminton.mall.util.ResultGenerator;
 import org.springframework.stereotype.Controller;
@@ -29,7 +29,7 @@ public class BusinessController {
     @Resource
     private AdminUserService adminUserService;
     @Resource
-    private BusinessService businessService;
+    private BusinessUserService businessUserService;
 
     @GetMapping("/login")
     public String loginPage() {
@@ -76,7 +76,7 @@ public class BusinessController {
             return "business/login";
         }
         AdminUser adminUser = adminUserService.login(userName, password);
-        BusinessUser businessUser = businessService.businessLogin(userName,password);
+        BusinessUser businessUser = businessUserService.businessLogin(userName, password);
         if (adminUser != null) {
             session.setAttribute("loginUser", adminUser.getNickName());
             session.setAttribute("loginUserId", adminUser.getAdminUserId());
@@ -84,12 +84,16 @@ public class BusinessController {
             //session.setMaxInactiveInterval(60 * 60 * 2);
             return "redirect:/admin/index";
         }
-        if (businessUser != null){
+        if (businessUser != null && businessUser.getLocked() == 0) {
             session.setAttribute("loginUser", businessUser.getNickName());
             session.setAttribute("loginUserId", businessUser.getBusinessUserId());
             //session过期时间设置为7200秒 即两小时
             //session.setMaxInactiveInterval(60 * 60 * 2);
             return "redirect:/business/index";
+        }
+        if (businessUser != null && businessUser.getLocked() == 1) {
+            session.setAttribute("errorMsg", "登陆失败，您的账户被锁定！");
+            return "business/login";
         }
         session.setAttribute("errorMsg", "登陆失败，您不是管理员或商家用户！");
         return "business/login";
@@ -115,7 +119,7 @@ public class BusinessController {
             return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_ERROR.getResult());
         }
         //todo 清verifyCode
-        String registerResult = businessService.register(loginName, password);
+        String registerResult = businessUserService.register(loginName, password);
         //注册成功
         if (ServiceResultEnum.SUCCESS.getResult().equals(registerResult)) {
             return ResultGenerator.genSuccessResult();
@@ -127,7 +131,7 @@ public class BusinessController {
     @GetMapping("/profile")
     public String profile(HttpServletRequest request) {
         Integer loginUserId = (int) request.getSession().getAttribute("loginUserId");
-        BusinessUser businessUser = businessService.getUserDetailById(loginUserId);
+        BusinessUser businessUser = businessUserService.getUserDetailById(loginUserId);
         if (businessUser == null) {
             return "business/login";
         }
@@ -145,7 +149,7 @@ public class BusinessController {
             return "参数不能为空";
         }
         Integer loginUserId = (int) request.getSession().getAttribute("loginUserId");
-        if (businessService.updatePassword(loginUserId, originalPassword, newPassword)) {
+        if (businessUserService.updatePassword(loginUserId, originalPassword, newPassword)) {
             //修改成功后清空session中的数据，前端控制跳转至登录页
             request.getSession().removeAttribute("loginUserId");
             request.getSession().removeAttribute("loginUser");
@@ -164,7 +168,7 @@ public class BusinessController {
             return "参数不能为空";
         }
         Integer loginUserId = (int) request.getSession().getAttribute("loginUserId");
-        if (businessService.updateName(loginUserId, loginUserName, nickName)) {
+        if (businessUserService.updateName(loginUserId, loginUserName, nickName)) {
             return ServiceResultEnum.SUCCESS.getResult();
         } else {
             return "修改失败";

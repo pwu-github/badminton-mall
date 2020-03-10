@@ -67,7 +67,7 @@ public class BusinessGoodsController {
 
     @GetMapping("/goods/edit/{goodsId}")
     public String edit(HttpServletRequest request, @PathVariable("goodsId") Long goodsId) {
-        request.setAttribute("path", "edit");
+        request.setAttribute("businessPath", "edit");
         GoodsInfo goodsInfo = goodsService.getNewBeeMallGoodsById(goodsId);
         if (goodsInfo == null) {
             return "error/error_400";
@@ -118,7 +118,7 @@ public class BusinessGoodsController {
             }
         }
         request.setAttribute("goods", goodsInfo);
-        request.setAttribute("path", "goods-edit");
+        request.setAttribute("businessPAth", "goods-edit");
         return "business/newbee_mall_goods_edit";
     }
 

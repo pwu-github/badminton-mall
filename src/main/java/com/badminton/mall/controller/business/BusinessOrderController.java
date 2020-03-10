@@ -27,7 +27,7 @@ public class BusinessOrderController {
 
     @GetMapping("/orders")
     public String ordersPage(HttpServletRequest request) {
-        request.setAttribute("path", "orders");
+        request.setAttribute("businessPath", "orders");
         return "business/newbee_mall_order";
     }
 

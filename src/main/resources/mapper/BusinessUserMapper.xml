@@ -16,7 +16,7 @@
     select
     <include refid="Base_Column_List" />
     from business_user
-    where login_name = #{userName,jdbcType=VARCHAR} AND password=#{password,jdbcType=VARCHAR} AND locked = 0
+    where login_name = #{userName,jdbcType=VARCHAR} AND password=#{password,jdbcType=VARCHAR}
   </select>
 
   <insert id="insertSelective" parameterType="com.badminton.mall.entity.BusinessUser">
@@ -74,10 +74,10 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.badminton.mall.entity.BusinessUser">
     update business_user
     <set>
-      <if test="loginUserName != null">
+      <if test="loginName != null">
         login_name = #{loginName,jdbcType=VARCHAR},
       </if>
-      <if test="loginPassword != null">
+      <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
       </if>
       <if test="nickName != null">
@@ -88,6 +88,36 @@
       </if>
     </set>
     where business_user_id = #{businessUserId,jdbcType=INTEGER}
+  </update>
+
+  <select id="findMallUserList" parameterType="Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from business_user
+    where 1=1
+    <if test="loginName!=null and loginName!=''">
+      and login_name = #{loginName}
+    </if>
+    order by create_time desc
+    <if test="start!=null and limit!=null">
+      limit #{start},#{limit}
+    </if>
+  </select>
+
+  <select id="getTotalMallUsers" parameterType="Map" resultType="int">
+    select count(*) from business_user
+    where 1=1
+    <if test="loginName!=null and loginName!=''">
+      and login_name = #{loginName}
+    </if>
+  </select>
+
+  <update id="lockUserBatch">
+    update business_user
+    set locked=#{lockStatus} where business_user_id in
+    <foreach item="id" collection="ids" open="(" separator="," close=")">
+      #{id}
+    </foreach>
   </update>
 
 </mapper>

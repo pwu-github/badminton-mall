@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
@@ -27,6 +28,11 @@ public class GoodsController {
     private GoodsService goodsService;
     @Resource
     private CategoryService categoryService;
+
+    @RequestMapping("/test")
+    public String test(){
+        return "mall/test_jquery";
+    }
 
     @GetMapping({"/search", "/search.html"})
     public String searchPage(@RequestParam Map<String, Object> params, HttpServletRequest request) {
@@ -72,6 +78,7 @@ public class GoodsController {
         if (Constants.SELL_STATUS_UP != goods.getGoodsSellStatus()){
             MallException.fail(ServiceResultEnum.GOODS_PUT_DOWN.getResult());
         }
+        goodsService.incView(goodsId);
         GoodsDetailVO goodsDetailVO = new GoodsDetailVO();
         BeanUtil.copyProperties(goods, goodsDetailVO);
         goodsDetailVO.setGoodsCarouselList(goods.getGoodsCarousel().split(","));

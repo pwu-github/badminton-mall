@@ -244,6 +244,10 @@
     margin-top: 15px;
 }
 
+#content #hot {
+    width: 100%;
+}
+
 #content #sub_banner .selector {
     width: 234px;
     height: 100%;
@@ -345,6 +349,10 @@
 }
 
 #content #flash ul li a .item_price {
+    color: #1baeae;
+}
+
+#content #flash ul li a .view_count {
     color: #1baeae;
 }
 

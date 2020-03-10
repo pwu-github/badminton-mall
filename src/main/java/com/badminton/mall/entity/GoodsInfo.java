@@ -29,6 +29,16 @@ public class GoodsInfo {
 
     private Integer createUser;
 
+    private Integer viewCount;
+
+    public Integer getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(Integer viewCount) {
+        this.viewCount = viewCount;
+    }
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
@@ -188,6 +198,7 @@ public class GoodsInfo {
         sb.append(", updateUser=").append(updateUser);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", goodsDetailContent=").append(goodsDetailContent);
+        sb.append(", viewCount=").append(viewCount);
         sb.append("]");
         return sb.toString();
     }

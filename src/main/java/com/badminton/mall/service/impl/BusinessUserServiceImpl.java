@@ -9,15 +9,19 @@ package com.badminton.mall.service.impl;
 
 import com.badminton.mall.common.ServiceResultEnum;
 import com.badminton.mall.dao.BusinessUserMapper;
-import com.badminton.mall.entity.AdminUser;
 import com.badminton.mall.entity.BusinessUser;
-import com.badminton.mall.service.BusinessService;
+import com.badminton.mall.entity.ConsumerUser;
+import com.badminton.mall.service.BusinessUserService;
 import com.badminton.mall.util.MD5Util;
+import com.badminton.mall.util.PageQueryUtil;
+import com.badminton.mall.util.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class BusinessUserServiceImpl implements BusinessService {
+public class BusinessUserServiceImpl implements BusinessUserService {
     @Autowired
     private BusinessUserMapper businessUserMapper;
     @Override
@@ -81,5 +85,21 @@ public class BusinessUserServiceImpl implements BusinessService {
             }
         }
         return false;
+    }
+
+    @Override
+    public PageResult getNewBeeMallUsersPage(PageQueryUtil pageUtil) {
+        List<BusinessUser> businessUsers = businessUserMapper.findMallUserList(pageUtil);
+        int total = businessUserMapper.getTotalMallUsers(pageUtil);
+        PageResult pageResult = new PageResult(businessUsers, total, pageUtil.getLimit(), pageUtil.getPage());
+        return pageResult;
+    }
+
+    @Override
+    public boolean lockUsers(Integer[] ids, int lockStatus) {
+        if (ids.length < 1) {
+            return false;
+        }
+        return businessUserMapper.lockUserBatch(ids, lockStatus) > 0;
     }
 }

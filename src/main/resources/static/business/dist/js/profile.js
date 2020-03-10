@@ -1,4 +1,5 @@
 $(function () {
+    var swlMessage = '修改成功';
     //修改个人信息
     $('#updateUserNameButton').click(function () {
         $("#updateUserNameButton").attr("disabled",true);
@@ -14,7 +15,15 @@ $(function () {
                 success: function (r) {
                     console.log(r);
                     if (r == 'success') {
-                        alert('修改成功');
+                        swal({
+                            title: swlMessage,
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonColor: '#1baeae',
+                            // confirmButtonText: '返回商品列表',
+                            confirmButtonClass: 'btn btn-success',
+                            buttonsStyling: false
+                        })
                     } else {
                         alert('修改失败');
                     }
@@ -36,10 +45,20 @@ $(function () {
                 success: function (r) {
                     console.log(r);
                     if (r == 'success') {
-                        alert('修改成功');
-                        window.location.href = '/admin/login';
+                        swal({
+                            title: swlMessage,
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonColor: '#1baeae',
+                            // confirmButtonText: '返回商品列表',
+                            confirmButtonClass: 'btn btn-success',
+                            buttonsStyling: false
+                        }).then(function () {
+                            window.location.href = '/business/login';
+                        })
+
                     } else {
-                        alert('修改失败');
+                        // swal('修改失败');
                     }
                 }
             });
@@ -82,16 +101,17 @@ function validPasswordForUpdate(originalPassword, newPassword) {
         $('#updatePassword-info').css("display", "block");
         $('#updatePassword-info').html("请输入原密码！");
         return false;
-    }
-    if (isNull(newPassword) || newPassword.trim().length < 1) {
+    }else if (isNull(newPassword) || newPassword.trim().length < 1) {
         $('#updatePassword-info').css("display", "block");
         $('#updatePassword-info').html("新密码不能为空！");
         return false;
-    }
-    if (!validPassword(newPassword)) {
+    }else if (!validPassword(newPassword)) {
         $('#updatePassword-info').css("display", "block");
         $('#updatePassword-info').html("请输入符合规范的密码！");
         return false;
+    }else {
+        $('#updatePassword-info').css("display", "block");
+        $('#updatePassword-info').html("请检查原密码是否正确！");
     }
     return true;
 }

@@ -12,11 +12,13 @@
 }
 img {
   border: none;
+  width: 100%;
 }
 a {
   border: none;
   text-decoration: none;
   color: #000;
+  white-space:nowrap;
 }
 .border {
   border: 1px solid #f00;

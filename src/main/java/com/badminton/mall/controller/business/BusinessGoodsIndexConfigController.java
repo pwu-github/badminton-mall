@@ -31,7 +31,7 @@ public class BusinessGoodsIndexConfigController {
             return "error/error_5xx";
         }
 
-        request.setAttribute("path", indexConfigTypeEnum.getName());
+        request.setAttribute("businessPath", indexConfigTypeEnum.getName());
         request.setAttribute("configType", configType);
         return "business/newbee_mall_index_config";
     }

@@ -13,18 +13,21 @@ $(function () {
             'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'multiimage',
             'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
             'anchor', 'link', 'unlink'],
-        uploadJson: '/admin/upload/file',
+        uploadJson: '/business/upload/file',
         filePostName: 'file'
     });
 
     new AjaxUpload('#uploadGoodsCoverImg', {
-        action: '/admin/upload/file',
+        action: '/business/upload/file',
         name: 'file',
         autoSubmit: true,
         responseType: "json",
         onSubmit: function (file, extension) {
             if (!(extension && /^(jpg|jpeg|png|gif)$/.test(extension.toLowerCase()))) {
-                alert('只支持jpg、png、gif格式的文件！');
+                // alert('只支持jpg、png、gif格式的文件！');
+                swal("只支持jpg、png、gif格式的文件！", {
+                    icon: "error",
+                });
                 return false;
             }
         },
@@ -34,7 +37,9 @@ $(function () {
                 $("#goodsCoverImg").attr("style", "width: 128px;height: 128px;display:block;");
                 return false;
             } else {
-                alert("error");
+                swal("error", {
+                    icon: "error",
+                });
             }
         }
     });
@@ -149,7 +154,7 @@ $('#saveButton').click(function () {
         });
         return;
     }
-    var url = '/admin/goods/save';
+    var url = '/business/goods/save';
     var swlMessage = '保存成功';
     var data = {
         "goodsName": goodsName,
@@ -165,7 +170,7 @@ $('#saveButton').click(function () {
         "goodsSellStatus": goodsSellStatus
     };
     if (goodsId > 0) {
-        url = '/admin/goods/update';
+        url = '/business/goods/update';
         swlMessage = '修改成功';
         data = {
             "goodsId": goodsId,
@@ -190,18 +195,20 @@ $('#saveButton').click(function () {
         data: JSON.stringify(data),
         success: function (result) {
             if (result.resultCode == 200) {
+                // alert(url);
                 $('#goodsModal').modal('hide');
                 swal({
                     title: swlMessage,
                     type: 'success',
                     showCancelButton: false,
                     confirmButtonColor: '#1baeae',
-                    confirmButtonText: '返回商品列表',
+                    // confirmButtonText: '返回商品列表',
                     confirmButtonClass: 'btn btn-success',
                     buttonsStyling: false
                 }).then(function () {
-                    window.location.href = "/admin/goods";
+                    window.location.href = "/business/goods";
                 })
+                window.location.href = "/business/goods";
             } else {
                 $('#goodsModal').modal('hide');
                 swal(result.message, {
@@ -219,7 +226,7 @@ $('#saveButton').click(function () {
 });
 
 $('#cancelButton').click(function () {
-    window.location.href = "/admin/goods";
+    window.location.href = "/business/goods";
 });
 
 $('#levelOne').on('change', function () {

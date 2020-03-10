@@ -23,6 +23,16 @@ public class GoodsDetailVO implements Serializable {
 
     private String goodsDetailContent;
 
+    private Integer viewCount;
+
+    public Integer getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(Integer viewCount) {
+        this.viewCount = viewCount;
+    }
+
     public Long getGoodsId() {
         return goodsId;
     }
