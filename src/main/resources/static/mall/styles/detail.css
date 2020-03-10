@@ -68,6 +68,14 @@
     box-sizing: border-box;
 }
 
+#detail .intro .left .swiper-container img{
+    width: 120%;
+    height: 100%;
+    margin: 20px auto;
+    padding: 0 34px;
+    box-sizing: border-box;
+}
+
 #detail .intro .left .swiper-container .swiper-button-prev {
     left: 0;
     background-position: left;
