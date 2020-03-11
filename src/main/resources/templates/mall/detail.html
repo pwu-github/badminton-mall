@@ -43,8 +43,8 @@
             </div>
 
             <div class="order">
-                <input class="car" type="button" th:onclick="'saveAndGoCart('+${goodsDetail.goodsId}+')'" value="立即选购"/>
-                <input class="car" type="button" th:onclick="'saveToCart('+${goodsDetail.goodsId}+')'" value="加入购物车"/>
+                <input class="car" type="button" th:onclick="'saveAndGoCart('+${goodsDetail.goodsId}+')'" value="立即选购" />
+                <input class="car" type="button" th:onclick="'saveToCart('+${goodsDetail.goodsId}+')'" value="加入购物车" />
             </div>
             <div class="tb-extra ml20" id="J_tbExtra">
                 <dl>
@@ -78,46 +78,6 @@
                         <script type="text/javascript" charset="utf-8"
                                 src="http://static.bshare.cn/b/bshareC0.js"></script>
                     </div>
-                    <!--<div>-->
-                        <!--<script type="text/javascript">-->
-                            <!--bShareOpt = {-->
-                                <!--uuid: "",-->
-                                <!--url: "",-->
-                                <!--summary: "{$goods_info.goods_brief}",-->
-                                <!--pic: "./../{$goods_info.goods_img}",-->
-                                <!--vUid: "$_SESSION['user_id']|$_SESSION['user_name']",-->
-                                <!--product: "{$goods_info.goods_name}",-->
-                                <!--price: "{$goods_info.promote_price}",-->
-                                <!--brand: "{$brand_name}",-->
-                                <!--tag: "{$value.label}",-->
-                                <!--category: "{$cat_data.cat_name}",-->
-                                <!--template: "1"-->
-                            <!--};-->
-                        <!--</script>-->
-                        <!--<a class="bsLikeDiv" href="http://static.bshare.cn"></a>-->
-                        <!--<script type="text/javascript" charset="utf-8"-->
-                                <!--src="http://static.bshare.cn/b/bshareLike.js"></script>-->
-                        <!--<div class="bshare-custom icon" style="float:left;">-->
-                            <!--<a title="分享到新浪微博" class="bshare-sinaminiblog"></a>-->
-                            <!--<a title="分享到人人网" class="bshare-renren"></a>-->
-                            <!--<a title="分享到腾讯微博" class="bshare-qqmb"></a>-->
-                            <!--<a title="分享到搜狐微博" class="bshare-sohuminiblog"></a>-->
-                            <!--<a title="分享到QQ空间" class="bshare-qzone" style="display: inline;"></a>-->
-                        <!--</div>-->
-                        <!--<script type="text/javascript" charset="utf-8"-->
-                                <!--src="http://static.bshare.cn/b/button.js#style=-1&amp;ssc=false&amp;mdiv=-1&amp;type=15"></script>-->
-                        <!--<script type="text/javascript" charset="utf-8"-->
-                                <!--src="http://static.bshare.cn/b/bshareC1.js"></script>-->
-                    <!--</div>-->
-                    <!--</br>-->
-                    <!--<div class="bsync-custom icon-medium-blue">-->
-                        <!--<a title="一键分享到各大微博和社交网络" class="bshare-bsync"-->
-                           <!--onclick="javascript:bSync.share(event, 'bsharesync', {url:'', title:'', summary:''})"></a>-->
-                        <!--<span class="BSHARE_COUNT bshare-share-count">0</span>-->
-                    <!--</div>-->
-                    <!--<script type="text/javascript" charset="utf-8"-->
-                            <!--src="http://static.bshare.cn/b/bsync.js#uuid=<您的uuid>">-->
-                    <!--</script>-->
 
                 </dl>
 
@@ -160,8 +120,7 @@
                         dangerMode: true,
                     }).then((flag) = > {
                         window.location.reload();
-                }
-                )
+                    })
                     ;
                 } else {
                     swal(result.message, {
