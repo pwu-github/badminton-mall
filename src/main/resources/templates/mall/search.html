@@ -51,6 +51,9 @@
         <a th:href="@{'/search?keyword='+${keyword==null?'':keyword}+'&goodsCategoryId='+${goodsCategoryId==null?'':goodsCategoryId}+'&orderBy=price'}">
             <div th:class="${orderBy=='price'?'active':''}">价格</div>
         </a>
+        <a th:href="@{'/search?keyword='+${keyword==null?'':keyword}+'&goodsCategoryId='+${goodsCategoryId==null?'':goodsCategoryId}+'&orderBy=viewCount'}">
+            <div th:class="${orderBy=='viewCount'?'active':''}">浏览量</div>
+        </a>
     </div>
 </div>
 
@@ -68,6 +71,7 @@
                                                th:text="${goods.goodsName}">newbee.ltd</a></div>
                     <div class="item_sub_intro" th:text="${goods.goodsIntro}">newbee.ltd</div>
                     <div class="item_price" th:text="${goods.sellingPrice+'.00元'}">1299.00元</div>
+                    <div class="item_view_count" th:text="${goods.viewCount+'人看过'}">1</div>
                 </div>
             </th:block>
         </th:block>

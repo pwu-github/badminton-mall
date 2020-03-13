@@ -6,6 +6,7 @@ badminton-mall商城
 商家注冊：http://localhost:8080/business/register
 
 bug记录：
-1、kindediter批量图片上传不显示上传按钮
+1、kindediter批量图片上传不显示上传按钮,未解决，可以单张上传
 2、需要增加库存管理
 3、商品下架、库存不足等，不直接在页面抛出异常，做友好提示
+4、按照浏览量排序
