@@ -3,90 +3,97 @@
 <head th:replace="mall/header::head-fragment('NewBee商城-商品详情','detail')">
 </head>
 <body>
-<header th:replace="mall/header::header-fragment"></header>
+<th:block th:if="${message != null}">
+    <h1>商品不存在或已下架</h1>
+</th:block>
+<th:block th:if="${message == null}">
+    <header th:replace="mall/header::header-fragment"></header>
 
-<div id="detail">
-    <!-- nav -->
-    <nav th:replace="mall/header::nav-fragment"></nav>
+    <div id="detail">
+        <!-- nav -->
+        <nav th:replace="mall/header::nav-fragment"></nav>
 
-    <div class="dc">
-        <div class="content w">
-            <div class="title fl">商品详情</div>
-            <nav class="fr">
-                <li><a href="##">概述</a></li>
-                <li>|</li>
-                <li><a href="##">详情</a></li>
-                <li>|</li>
-                <li><a href="##">用户评价</a></li>
+        <div class="dc">
+            <div class="content w">
+                <div class="title fl">商品详情</div>
+                <nav class="fr">
+                    <li><a href="##">概述</a></li>
+                    <li>|</li>
+                    <li><a href="##">详情</a></li>
+                    <li>|</li>
+                    <li><a href="##">用户评价</a></li>
+                    <div class="clear"></div>
+                </nav>
                 <div class="clear"></div>
-            </nav>
+            </div>
+        </div>
+
+        <div class="intro mt20 w clearfix">
+            <div class="left fl" style="position: relative;">
+                <div class="swiper-container fl">
+                    <img th:src="@{${goodsDetail.goodsCoverImg}}">
+                </div>
+            </div>
+            <div class="right fr">
+                <div class="h3 ml20 mt20" th:text="${goodsDetail.goodsName}">NewBeeMall</div>
+                <div class="sub_title mr40 ml20 mt10" th:text="${goodsDetail.goodsIntro}">NewBeeMall</div>
+                <div class="item_price mr40 ml20 mt10">
+                    <th:block th:text="${goodsDetail.originalPrice}+'.00 元'"></th:block>
+                    <del>
+                        <th:block th:text="${goodsDetail.sellingPrice}+'.00 元'"></th:block>
+                    </del>
+                    </br>
+                    <th:block th:text="${goodsDetail.viewCount}+'人看过'"></th:block>
+                    </br>
+                </div>
+
+                <div class="order">
+                    <input class="car" type="button" th:onclick="'saveAndGoCart('+${goodsDetail.goodsId}+')'" value="立即选购"/>
+                    <input class="car" type="button" th:onclick="'saveToCart('+${goodsDetail.goodsId}+')'" value="加入购物车"/>
+                </div>
+                <div class="tb-extra ml20" id="J_tbExtra">
+                    <dl>
+                        <dt>承诺</dt>
+                        <dd><a class="J_Cont" title="满足7天无理由退换货申请的前提下，包邮商品需要买家承担退货邮费，非包邮商品需要买家承担发货和退货邮费。" href="#"
+                               target="_blank"><img th:src="@{/mall/image/7d.jpg}">7天无理由</a></dd>
+                    </dl>
+                    <dl>
+                        <dt>支付</dt>
+                        <dd><a href="##" target="_blank"><img th:src="@{/mall/image/hua.png}">蚂蚁花呗</a><a href="##"
+                                                                                                         target="_blank"><img
+                                th:src="@{/mall/image/card.png}">信用卡支付</a><a href="##" target="_blank"><img
+                                th:src="@{/mall/image/ji.png}">集分宝</a></dd>
+                    </dl>
+                    <dl>
+                        <dt>支持</dt>
+                        <dd>折旧变现，买新更省钱。<a style="float:none;text-decoration: underline;" href="##">详情</a></dd>
+                    </dl>
+                    <dl>
+                        <dt>分享</dt>
+                        <div>
+                            <div class="bshare-custom">
+                                <a title="分享到QQ空间" class="bshare-qzone"></a>
+                                <a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
+                                <a title="分享到人人网" class="bshare-renren"></a>
+                                <a title="分享到腾讯微博" class="bshare-qqmb"></a>
+                                <a title="分享到网易微博" class="bshare-neteasemb"></a>
+                                <a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>
+                                <span class="BSHARE_COUNT bshare-share-count">0</span>
+                            </div>
+                        </div>
+
+                    </dl>
+                </div>
+            </div>
             <div class="clear"></div>
         </div>
-    </div>
-
-    <div class="intro mt20 w clearfix">
-        <div class="left fl" style="position: relative;">
-            <div class="swiper-container fl">
-                <img th:src="@{${goodsDetail.goodsCoverImg}}">
-            </div>
+        <!-- 这里使用的是 th:utext 标签，用 th:text 不会解析 html，用 th:utext 会解析 html -->
+        <div class="goods mt20 w clearfix" th:utext="${goodsDetail.goodsDetailContent}">
         </div>
-        <div class="right fr">
-            <div class="h3 ml20 mt20" th:text="${goodsDetail.goodsName}">NewBeeMall</div>
-            <div class="sub_title mr40 ml20 mt10" th:text="${goodsDetail.goodsIntro}">NewBeeMall</div>
-            <div class="item_price mr40 ml20 mt10">
-                <th:block th:text="${goodsDetail.originalPrice}+'.00 元'"></th:block>
-                <del>
-                    <th:block th:text="${goodsDetail.sellingPrice}+'.00 元'"></th:block>
-                </del>
-                </br>
-                <th:block th:text="${goodsDetail.viewCount}+'人看过'"></th:block>
-                </br>
-            </div>
-
-            <div class="order">
-                <input class="car" type="button" th:onclick="'saveAndGoCart('+${goodsDetail.goodsId}+')'" value="立即选购"/>
-                <input class="car" type="button" th:onclick="'saveToCart('+${goodsDetail.goodsId}+')'" value="加入购物车"/>
-            </div>
-            <div class="tb-extra ml20" id="J_tbExtra">
-                <dl>
-                    <dt>承诺</dt>
-                    <dd><a class="J_Cont" title="满足7天无理由退换货申请的前提下，包邮商品需要买家承担退货邮费，非包邮商品需要买家承担发货和退货邮费。" href="#"
-                           target="_blank"><img th:src="@{/mall/image/7d.jpg}">7天无理由</a></dd>
-                </dl>
-                <dl>
-                    <dt>支付</dt>
-                    <dd><a href="##" target="_blank"><img th:src="@{/mall/image/hua.png}">蚂蚁花呗</a><a href="##"
-                                                                                                     target="_blank"><img
-                            th:src="@{/mall/image/card.png}">信用卡支付</a><a href="##" target="_blank"><img
-                            th:src="@{/mall/image/ji.png}">集分宝</a></dd>
-                </dl>
-                <dl>
-                    <dt>支持</dt>
-                    <dd>折旧变现，买新更省钱。<a style="float:none;text-decoration: underline;" href="##">详情</a></dd>
-                </dl>
-                <dl>
-                    <dt>分享</dt>
-                    <div>
-                        <div class="bshare-custom">
-                            <a title="分享到QQ空间" class="bshare-qzone"></a>
-                            <a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
-                            <a title="分享到人人网" class="bshare-renren"></a>
-                            <a title="分享到腾讯微博" class="bshare-qqmb"></a>
-                            <a title="分享到网易微博" class="bshare-neteasemb"></a>
-                            <a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>
-                            <span class="BSHARE_COUNT bshare-share-count">0</span>
-                        </div>
-                    </div>
-
-                </dl>
-            </div>
-        </div>
-        <div class="clear"></div>
     </div>
-    <!-- 这里使用的是 th:utext 标签，用 th:text 不会解析 html，用 th:utext 会解析 html -->
-    <div class="goods mt20 w clearfix" th:utext="${goodsDetail.goodsDetailContent}">
-    </div>
-</div>
+
+</th:block>
+
 
 
 <!-- jQuery -->

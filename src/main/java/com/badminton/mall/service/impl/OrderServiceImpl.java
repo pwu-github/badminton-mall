@@ -197,7 +197,8 @@ public class OrderServiceImpl implements OrderService {
             }
             //存在数量大于库存的情况，直接返回错误提醒
             if (shoppingCartItemVO.getGoodsCount() > newBeeMallGoodsMap.get(shoppingCartItemVO.getGoodsId()).getStockNum()) {
-                MallException.fail(ServiceResultEnum.SHOPPING_ITEM_COUNT_ERROR.getResult());
+//                MallException.fail(ServiceResultEnum.SHOPPING_ITEM_COUNT_ERROR.getResult());
+                return ServiceResultEnum.SHOPPING_ITEM_COUNT_ERROR.getResult();
             }
         }
         //删除购物项
@@ -206,7 +207,8 @@ public class OrderServiceImpl implements OrderService {
                 List<StockNumDTO> stockNumDTOS = BeanUtil.copyList(myShoppingCartItems, StockNumDTO.class);
                 int updateStockNumResult = goodsMapper.updateStockNum(stockNumDTOS);
                 if (updateStockNumResult < 1) {
-                    MallException.fail(ServiceResultEnum.SHOPPING_ITEM_COUNT_ERROR.getResult());
+//                    MallException.fail(ServiceResultEnum.SHOPPING_ITEM_COUNT_ERROR.getResult());
+                    return ServiceResultEnum.SHOPPING_ITEM_COUNT_ERROR.getResult();
                 }
                 //生成订单号
                 String orderNo = NumberUtil.genOrderNo();
@@ -221,7 +223,8 @@ public class OrderServiceImpl implements OrderService {
                     priceTotal += shoppingCartItemVO.getGoodsCount() * shoppingCartItemVO.getSellingPrice();
                 }
                 if (priceTotal < 1) {
-                    MallException.fail(ServiceResultEnum.ORDER_PRICE_ERROR.getResult());
+//                    MallException.fail(ServiceResultEnum.ORDER_PRICE_ERROR.getResult());
+                    return ServiceResultEnum.ORDER_PRICE_ERROR.getResult();
                 }
                 mallOrder.setTotalPrice(priceTotal);
                 //todo 订单body字段，用来作为生成支付单描述信息，暂时未接入第三方支付接口，故该字段暂时设为空字符串

@@ -11,6 +11,7 @@ import com.badminton.mall.service.GoodsService;
 import com.badminton.mall.util.BeanUtil;
 import com.badminton.mall.util.PageQueryUtil;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -67,16 +68,18 @@ public class GoodsController {
     }
 
     @GetMapping("/goods/detail/{goodsId}")
-    public String detailPage(@PathVariable("goodsId") Long goodsId, HttpServletRequest request) {
+    public String detailPage(@PathVariable("goodsId") Long goodsId, HttpServletRequest request, Model model) {
         if (goodsId < 1) {
             return "error/error_5xx";
         }
         GoodsInfo goods = goodsService.getNewBeeMallGoodsById(goodsId);
         if (goods == null) {
-            MallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
+//            MallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
+            model.addAttribute("message",ServiceResultEnum.GOODS_NOT_EXIST.getResult());
         }
         if (Constants.SELL_STATUS_UP != goods.getGoodsSellStatus()){
-            MallException.fail(ServiceResultEnum.GOODS_PUT_DOWN.getResult());
+//            MallException.fail(ServiceResultEnum.GOODS_PUT_DOWN.getResult());
+            model.addAttribute("message",ServiceResultEnum.GOODS_PUT_DOWN.getResult());
         }
         goodsService.incView(goodsId);
         GoodsDetailVO goodsDetailVO = new GoodsDetailVO();
