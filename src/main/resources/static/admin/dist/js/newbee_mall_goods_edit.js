@@ -10,7 +10,7 @@ $(function () {
             'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
             'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
             'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
-            'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'multiimage',
+            'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|','image', 'multiimage',
             'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
             'anchor', 'link', 'unlink'],
         uploadJson: '/admin/upload/file',
